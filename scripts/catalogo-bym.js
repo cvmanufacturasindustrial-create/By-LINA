@@ -43,66 +43,97 @@ const SUBCATS = [
 // (regla del proyecto: los colores se agregan después). Quedan pendientes en esa misma carpeta
 // las carpetas Capturas_Pantalla, Empaques, Marca_Logos, Publicidad_RedesSociales y Videos:
 // no son fotos de producto, así que no se montaron.
+// Precios y materiales: guiados por el catálogo real de la dueña ("Accessories By LM 2026",
+// PDF en Descargas -- 44 páginas, precios en formato $XXK y notas de material "En rodio" /
+// "En plastimetal" / "En Plata" repetidas en casi todas las páginas). Se marca con [confirmado]
+// cuando la pieza aparece igual en el catálogo (mismo diseño) y con [estimado] cuando se usó el
+// precio típico de esa categoría en el catálogo porque no hay una coincidencia exacta -- estas
+// últimas quedan para que Lina las ajuste si el diseño exacto vale distinto.
 const productos = [
   { codigo: 'BYM-ANI-001', nombre: 'Anillo Flor con Circonias', sub: 'anillos',
     galeria: [{ src: 'imagenes/productos/anillo-flor-circonias.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Anillo en tono plateado con una flor tipo margarita cubierta de circonias y piedra central.',
-    detalles: ['Material: por definir', 'Diseño floral con circonias'], tallas: TALLAS_ANILLO, colores: [] },
+    precio: 25000, desc: 'Anillo en tono plateado con una flor tipo margarita cubierta de circonias y piedra central. Ajustable (giratorio).',
+    detalles: ['Bañado en rodio', 'Ajustable/giratorio', 'Diseño floral con circonias', '$25.000 [confirmado en catálogo]'], tallas: TALLAS_ANILLO, colores: [] },
 
   { codigo: 'BYM-ANI-002', nombre: 'Anillo Tres Mariposas', sub: 'anillos',
     galeria: [{ src: 'imagenes/productos/anillo-tres-mariposas.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Anillo en tono dorado con tres mariposas de circonias en fila sobre la banda.',
-    detalles: ['Material: por definir', 'Diseño de mariposas con circonias'], tallas: TALLAS_ANILLO, colores: [] },
+    precio: 20000, desc: 'Anillo en tono dorado con tres mariposas de circonias en fila sobre la banda.',
+    detalles: ['Bañado en rodio', 'Diseño de mariposas con circonias', '$20.000 [confirmado en catálogo]'], tallas: TALLAS_ANILLO, colores: [] },
+
+  { codigo: 'BYM-ANI-003', nombre: 'Anillo Tréboles Dorados', sub: 'anillos',
+    galeria: [{ src: 'imagenes/productos/anillo-treboles-dorados.jpg', etiqueta: 'frente' }],
+    precio: 20000, desc: 'Anillo ajustable en tono dorado con dos tréboles de circonias sobre banda texturizada.',
+    detalles: ['Bañado en rodio', 'Ajustable', '$20.000 [estimado según anillos de circonias del catálogo]'], tallas: TALLAS_ANILLO, colores: [] },
 
   { codigo: 'BYM-COL-001', nombre: 'Collar Dije "Fe" con Corazón de Circonias', sub: 'collares',
     galeria: [{ src: 'imagenes/productos/collar-dije-fe-corazon.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Collar de cadena fina dorada con dije "Fe" en letra cursiva y un pequeño corazón de circonias.',
-    detalles: ['Material: por definir', 'Cierre: mosquetón'], tallas: LARGOS_CADENA, colores: [] },
+    precio: 25000, desc: 'Collar de cadena fina dorada con dije "Fe" en letra cursiva y un pequeño corazón de circonias.',
+    detalles: ['Bañado en rodio', 'Cierre: mosquetón', '$25.000 [estimado según collares con dije pequeño del catálogo]'], tallas: LARGOS_CADENA, colores: [] },
 
   { codigo: 'BYM-COL-002', nombre: 'Collar Dije Tortuga Marina', sub: 'collares',
     galeria: [{ src: 'imagenes/productos/collar-dije-tortuga-marina.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Collar de cadena dorada tipo veneciana con dije de tortuga marina en esmalte azul y verde.',
-    detalles: ['Material: por definir', 'Cierre: mosquetón'], tallas: LARGOS_CADENA, colores: [] },
+    precio: 25000, desc: 'Collar de cadena dorada tipo veneciana con dije de tortuga marina en esmalte azul y verde.',
+    detalles: ['Bañado en rodio', 'Cierre: mosquetón', '$25.000 [confirmado en catálogo]'], tallas: LARGOS_CADENA, colores: [] },
+
+  { codigo: 'BYM-COL-003', nombre: 'Set Collar y Aretes Sol y Estrellas', sub: 'collares',
+    galeria: [{ src: 'imagenes/productos/set-collar-aretes-sol-estrellas.jpg', etiqueta: 'set' }],
+    precio: 30000, desc: 'Set de collar y aretes en tono dorado: dije de sol con circonias, luna con circonias azules y estrella colgante, más aretes de estrella a juego.',
+    detalles: ['Bañado en rodio', 'Incluye collar + par de aretes', '$30.000 [estimado según sets de collar+dije variado del catálogo]'], tallas: LARGOS_CADENA, colores: [] },
 
   { codigo: 'BYM-ARE-001', nombre: 'Aretes Corazones Dorados con Circonias', sub: 'aretes',
     galeria: [{ src: 'imagenes/productos/aretes-corazones-dorados.jpg', etiqueta: 'par' }],
-    precio: 0, desc: 'Aretes tipo botón en forma de corona de corazones, alternando corazones lisos dorados y corazones cubiertos de circonias.',
-    detalles: ['Material: por definir', 'Cierre: presión'], tallas: TALLA_UNICA, colores: [] },
+    precio: 12000, desc: 'Aretes tipo botón en forma de corona de corazones, alternando corazones lisos dorados y corazones cubiertos de circonias.',
+    detalles: ['Bañado en rodio', 'Cierre: presión', '$12.000 [estimado según topos pequeños del catálogo]'], tallas: TALLA_UNICA, colores: [] },
 
   { codigo: 'BYM-ARE-002', nombre: 'Set de Aretes x3: Corazones, Bolitas y Gatito', sub: 'aretes',
     galeria: [{ src: 'imagenes/productos/aretes-set-x3-corazones-bolitas-gatito.jpg', etiqueta: 'set' }],
-    precio: 0, desc: 'Set de 3 pares de aretes dorados: corazones calados con circonias, bolitas lisas, y aretes de gatito con dije de corazón colgante en circonias.',
-    detalles: ['Material: por definir', 'Incluye 3 pares'], tallas: TALLA_UNICA, colores: [] },
+    precio: 25000, desc: 'Set de 3 pares de aretes dorados: corazones calados con circonias, bolitas lisas, y aretes de gatito con dije de corazón colgante en circonias.',
+    detalles: ['Bañado en rodio', 'Incluye 3 pares', '$25.000 [estimado según sets de topos en cartón del catálogo]'], tallas: TALLA_UNICA, colores: [] },
+
+  { codigo: 'BYM-ARE-003', nombre: 'Aretes Flor Multicolor', sub: 'aretes',
+    galeria: [{ src: 'imagenes/productos/aretes-flor-multicolor.jpg', etiqueta: 'par' }],
+    precio: 10000, desc: 'Aretes tipo botón en forma de flor de 5 pétalos, cada pétalo en un color de circonia distinto (morado, naranja, verde, rosa, blanco).',
+    detalles: ['Bañado en rodio', 'Cierre: presión', '$10.000 [confirmado en catálogo: flor 5 colores]'], tallas: TALLA_UNICA, colores: [] },
+
+  { codigo: 'BYM-ARE-004', nombre: 'Aretes Estrella Verde', sub: 'aretes',
+    galeria: [{ src: 'imagenes/productos/aretes-estrella-verde.jpg', etiqueta: 'par' }],
+    precio: 10000, desc: 'Aretes tipo botón en forma de estrella calada, con circonias verdes en el centro.',
+    detalles: ['Bañado en rodio', 'Cierre: presión', '$10.000 [estimado según topos pequeños del catálogo]'], tallas: TALLA_UNICA, colores: [] },
 
   { codigo: 'BYM-PUL-001', nombre: 'Pulsera Ajustable Tres Corazones', sub: 'pulseras',
     galeria: [{ src: 'imagenes/productos/pulsera-tres-corazones-ajustable.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Pulsera deslizante (ajustable a cualquier muñeca) en tono dorado con tres dijes de corazón en circonias negras, rosadas y lilas.',
-    detalles: ['Material: por definir', 'Cierre deslizante ajustable'], tallas: LARGOS_PULSERA, colores: [] },
+    precio: 30000, desc: 'Pulsera deslizante (ajustable a cualquier muñeca) en tono dorado con tres dijes de corazón en circonias negras, rosadas y lilas.',
+    detalles: ['Bañado en rodio', 'Cierre deslizante ajustable', '$30.000 [confirmado en catálogo]'], tallas: LARGOS_PULSERA, colores: [] },
 
   { codigo: 'BYM-PUL-002', nombre: 'Pulsera Tres Tréboles', sub: 'pulseras',
     galeria: [{ src: 'imagenes/productos/pulsera-tres-treboles.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Pulsera en tono plateado con tres dijes de trébol de 4 hojas en circonias rosa, fucsia y café, sobre cadena fina.',
-    detalles: ['Material: por definir'], tallas: LARGOS_PULSERA, colores: [] },
+    precio: 22000, desc: 'Pulsera en tono plateado con tres dijes de trébol de 4 hojas en circonias rosa, fucsia y café, sobre cadena fina.',
+    detalles: ['Bañado en rodio', '$22.000 [confirmado en catálogo: pulsera de tréboles]'], tallas: LARGOS_PULSERA, colores: [] },
+
+  { codigo: 'BYM-PUL-003', nombre: 'Pulsera Perlas y Trébol', sub: 'pulseras',
+    galeria: [{ src: 'imagenes/productos/pulsera-perlas-trebol.jpg', etiqueta: 'frente' }],
+    precio: 25000, desc: 'Pulsera elástica de perlas blancas y bolitas doradas alternadas, con dije de trébol de 4 hojas dorado.',
+    detalles: ['Bañado en rodio', 'Elástica (talla única)', '$25.000 [confirmado en catálogo: pulsera de perlas con dije]'], tallas: TALLA_UNICA, colores: [] },
 
   { codigo: 'BYM-DIJ-001', nombre: 'Dije Candado y Llave de Corazón', sub: 'dijes',
     galeria: [{ src: 'imagenes/productos/dije-candado-llave-corazon.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Dije doble en tono plateado: candado en forma de corazón cubierto de circonias con ojo de cerradura, y una pequeña llave a juego.',
-    detalles: ['Material: por definir', 'Incluye candado y llave'], tallas: TALLA_UNICA, colores: [] },
+    precio: 20000, desc: 'Dije doble en tono plateado: candado en forma de corazón cubierto de circonias con ojo de cerradura, y una pequeña llave a juego.',
+    detalles: ['Bañado en rodio', 'Incluye candado y llave', '$20.000 [confirmado en catálogo]'], tallas: TALLA_UNICA, colores: [] },
 
   { codigo: 'BYM-DIJ-002', nombre: 'Dije Set Viajera (Pasaporte, Mundo y Avión)', sub: 'dijes',
     galeria: [{ src: 'imagenes/productos/dije-set-viajera-pasaporte-mundo-avion.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Set de 3 dijes en tono plateado con temática de viaje: pasaporte, globo terráqueo en esmalte azul con brillo, y avión.',
-    detalles: ['Material: por definir', 'Incluye 3 dijes'], tallas: TALLA_UNICA, colores: [] },
+    precio: 17000, desc: 'Set de 3 dijes en tono plateado con temática de viaje: pasaporte, globo terráqueo en esmalte azul con brillo, y avión.',
+    detalles: ['Bañado en rodio', 'Incluye 3 dijes', '$17.000 [confirmado en catálogo]'], tallas: TALLA_UNICA, colores: [] },
 
   { codigo: 'BYM-BOL-001', nombre: 'Mini Bolso Acolchado Beige', sub: 'bolsos',
     galeria: [{ src: 'imagenes/productos/bolso-mini-acolchado-beige.jpg', etiqueta: 'frente' }],
     precio: 0, desc: 'Mini bolso de mano acolchado en beige, asas anudadas, correa de eslabones de resina, dije de cordón trenzado y llavero decorativo.',
-    detalles: ['Material: por definir', 'Incluye correa y llavero'], tallas: TALLA_UNICA, colores: [] },
+    detalles: ['Material: por definir', 'Incluye correa y llavero', 'No aparece en el catálogo de joyería -- precio pendiente de que Lina lo defina'], tallas: TALLA_UNICA, colores: [] },
 
   { codigo: 'BYM-CEL-001', nombre: 'Funda Tarjetera Floral Rosa para Celular', sub: 'celular',
     galeria: [{ src: 'imagenes/productos/funda-celular-floral-rosa.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Funda tipo tarjetero/porta-celular con estampado floral rosa, correa de cordón trenzado blanco y azul, con dije de flor tipo margarita.',
-    detalles: ['Material: por definir', 'Incluye correa y dije'], tallas: TALLA_UNICA, colores: [] }
+    precio: 32000, desc: 'Funda tipo tarjetero/porta-celular con estampado floral rosa, correa de cordón trenzado blanco y azul, con dije de flor tipo margarita.',
+    detalles: ['Incluye correa y dije', '$32.000 [confirmado en catálogo: Porta Carnet floral]'], tallas: TALLA_UNICA, colores: [] }
 ];
 
 // ============ RENDER ============
