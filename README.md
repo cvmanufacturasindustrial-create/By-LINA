@@ -47,11 +47,13 @@ Accessories-BYM/
 
 ## Qué falta llenar (todo marcado con `TODO` o "Ejemplo" en el código)
 
-1. **WhatsApp**: `window.BYM_WHATSAPP` en `index.html` (y el pie de página / botón flotante).
-2. **Piezas reales**: reemplazar los 8 ejemplos del array `productos` en `index.html`
-   (nombre exacto según la foto, `sub`, `galeria`, `precio`, `tallas`). Las fotos van en
-   `imagenes/productos/` con el mismo nombre que en `galeria`.
-3. **Precios**: `datos/lista-precios.md` (o directo en `precio:` del HTML).
+1. ~~**WhatsApp**~~ — listo: `window.BYM_WHATSAPP = '573104135834'` en `index.html` (pie de
+   página y botón flotante lo toman de ahí).
+2. **Precios**: las 12 piezas montadas desde "Joyeria By Lina" quedaron en $0 ("por definir")
+   — edítalos en `datos/lista-precios.md`.
+3. **Más piezas reales**: agregar objetos nuevos al array `productos` en
+   `scripts/catalogo-bym.js` (nombre exacto según la foto, `sub`, `galeria`, `precio`,
+   `tallas`). Las fotos van en `imagenes/productos/` con el mismo nombre que en `galeria`.
 4. **Colores** (opcional, cuando los definan): array `colores` de cada pieza.
 5. **Logo / favicon**: `imagenes/marca/`.
 
