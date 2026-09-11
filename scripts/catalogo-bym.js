@@ -7,12 +7,18 @@ const LARGOS_CADENA   = ['40 cm', '45 cm', '50 cm', '55 cm', '60 cm'];
 const LARGOS_PULSERA  = ['16 cm', '17 cm', '18 cm', '19 cm', 'Ajustable'];
 const TALLA_UNICA     = ['Única'];
 
-// --- Subcategorías del carrusel (las 4 pedidas) ---
+// --- Subcategorías del carrusel ---
+// Las 4 originales + 3 nuevas creadas automáticamente al montar las fotos de
+// C:\Users\User\Desktop\Joyeria By Lina (esa carpeta traía fotos reales para Dijes, Bolsos y
+// Accesorios de Celular, que no existían todavía como categoría).
 const SUBCATS = [
-  { id: 'anillos',  label: 'Anillos' },
-  { id: 'collares', label: 'Collares y cadenas' },
-  { id: 'aretes',   label: 'Aretes' },
-  { id: 'pulseras', label: 'Pulseras y tobilleras' }
+  { id: 'anillos',   label: 'Anillos' },
+  { id: 'collares',  label: 'Collares y cadenas' },
+  { id: 'aretes',    label: 'Aretes' },
+  { id: 'pulseras',  label: 'Pulseras y tobilleras' },
+  { id: 'dijes',     label: 'Dijes' },
+  { id: 'bolsos',    label: 'Bolsos' },
+  { id: 'celular',   label: 'Accesorios de Celular' }
 ];
 
 // --- Productos ---
@@ -31,48 +37,72 @@ const SUBCATS = [
 //                                         //     los chips de color automáticamente.
 // }
 //
-// Las piezas de abajo son EJEMPLOS para ver la estructura funcionando — reemplázalas por las
-// reales (nombre, foto, precio, tallas). Todos los `colores` van vacíos a propósito.
+// Piezas montadas automáticamente desde C:\Users\User\Desktop\Joyeria By Lina (prueba pedida
+// por el dueño): cada foto se revisó una por una antes de nombrarla. Precio en 0 ("por
+// definir") porque esa carpeta no traía precios — solo fotos. `colores` va vacío a propósito
+// (regla del proyecto: los colores se agregan después). Quedan pendientes en esa misma carpeta
+// las carpetas Capturas_Pantalla, Empaques, Marca_Logos, Publicidad_RedesSociales y Videos:
+// no son fotos de producto, así que no se montaron.
 const productos = [
-  { codigo: 'BYM-ANI-001', nombre: 'Anillo Solitario', sub: 'anillos',
-    galeria: [{ src: 'imagenes/productos/anillo-solitario.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Anillo solitario. (Ejemplo — reemplazar por la pieza real.)',
-    detalles: ['Material: por definir', 'Piedra: por definir'], tallas: TALLAS_ANILLO, colores: [] },
+  { codigo: 'BYM-ANI-001', nombre: 'Anillo Flor con Circonias', sub: 'anillos',
+    galeria: [{ src: 'imagenes/productos/anillo-flor-circonias.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Anillo en tono plateado con una flor tipo margarita cubierta de circonias y piedra central.',
+    detalles: ['Material: por definir', 'Diseño floral con circonias'], tallas: TALLAS_ANILLO, colores: [] },
 
-  { codigo: 'BYM-ANI-002', nombre: 'Anillo Media Alianza', sub: 'anillos',
-    galeria: [{ src: 'imagenes/productos/anillo-media-alianza.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Anillo media alianza. (Ejemplo.)',
-    detalles: ['Material: por definir'], tallas: TALLAS_ANILLO, colores: [] },
+  { codigo: 'BYM-ANI-002', nombre: 'Anillo Tres Mariposas', sub: 'anillos',
+    galeria: [{ src: 'imagenes/productos/anillo-tres-mariposas.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Anillo en tono dorado con tres mariposas de circonias en fila sobre la banda.',
+    detalles: ['Material: por definir', 'Diseño de mariposas con circonias'], tallas: TALLAS_ANILLO, colores: [] },
 
-  { codigo: 'BYM-COL-001', nombre: 'Cadena Eslabón Fino', sub: 'collares',
-    galeria: [{ src: 'imagenes/productos/cadena-eslabon-fino.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Cadena de eslabón fino. (Ejemplo.)',
+  { codigo: 'BYM-COL-001', nombre: 'Collar Dije "Fe" con Corazón de Circonias', sub: 'collares',
+    galeria: [{ src: 'imagenes/productos/collar-dije-fe-corazon.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Collar de cadena fina dorada con dije "Fe" en letra cursiva y un pequeño corazón de circonias.',
     detalles: ['Material: por definir', 'Cierre: mosquetón'], tallas: LARGOS_CADENA, colores: [] },
 
-  { codigo: 'BYM-COL-002', nombre: 'Collar con Dije de Corazón', sub: 'collares',
-    galeria: [{ src: 'imagenes/productos/collar-dije-corazon.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Collar con dije de corazón. (Ejemplo.)',
-    detalles: ['Material: por definir'], tallas: LARGOS_CADENA, colores: [] },
+  { codigo: 'BYM-COL-002', nombre: 'Collar Dije Tortuga Marina', sub: 'collares',
+    galeria: [{ src: 'imagenes/productos/collar-dije-tortuga-marina.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Collar de cadena dorada tipo veneciana con dije de tortuga marina en esmalte azul y verde.',
+    detalles: ['Material: por definir', 'Cierre: mosquetón'], tallas: LARGOS_CADENA, colores: [] },
 
-  { codigo: 'BYM-ARE-001', nombre: 'Aretes Topo Circonia', sub: 'aretes',
-    galeria: [{ src: 'imagenes/productos/aretes-topo-circonia.jpg', etiqueta: 'par' }],
-    precio: 0, desc: 'Aretes tipo topo con circonia. (Ejemplo.)',
+  { codigo: 'BYM-ARE-001', nombre: 'Aretes Corazones Dorados con Circonias', sub: 'aretes',
+    galeria: [{ src: 'imagenes/productos/aretes-corazones-dorados.jpg', etiqueta: 'par' }],
+    precio: 0, desc: 'Aretes tipo botón en forma de corona de corazones, alternando corazones lisos dorados y corazones cubiertos de circonias.',
     detalles: ['Material: por definir', 'Cierre: presión'], tallas: TALLA_UNICA, colores: [] },
 
-  { codigo: 'BYM-ARE-002', nombre: 'Aretes Argolla Lisa', sub: 'aretes',
-    galeria: [{ src: 'imagenes/productos/aretes-argolla-lisa.jpg', etiqueta: 'par' }],
-    precio: 0, desc: 'Aretes tipo argolla lisa. (Ejemplo.)',
-    detalles: ['Material: por definir'], tallas: TALLA_UNICA, colores: [] },
+  { codigo: 'BYM-ARE-002', nombre: 'Set de Aretes x3: Corazones, Bolitas y Gatito', sub: 'aretes',
+    galeria: [{ src: 'imagenes/productos/aretes-set-x3-corazones-bolitas-gatito.jpg', etiqueta: 'set' }],
+    precio: 0, desc: 'Set de 3 pares de aretes dorados: corazones calados con circonias, bolitas lisas, y aretes de gatito con dije de corazón colgante en circonias.',
+    detalles: ['Material: por definir', 'Incluye 3 pares'], tallas: TALLA_UNICA, colores: [] },
 
-  { codigo: 'BYM-PUL-001', nombre: 'Pulsera Cadena con Charm', sub: 'pulseras',
-    galeria: [{ src: 'imagenes/productos/pulsera-charm.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Pulsera de cadena con charm. (Ejemplo.)',
+  { codigo: 'BYM-PUL-001', nombre: 'Pulsera Ajustable Tres Corazones', sub: 'pulseras',
+    galeria: [{ src: 'imagenes/productos/pulsera-tres-corazones-ajustable.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Pulsera deslizante (ajustable a cualquier muñeca) en tono dorado con tres dijes de corazón en circonias negras, rosadas y lilas.',
+    detalles: ['Material: por definir', 'Cierre deslizante ajustable'], tallas: LARGOS_PULSERA, colores: [] },
+
+  { codigo: 'BYM-PUL-002', nombre: 'Pulsera Tres Tréboles', sub: 'pulseras',
+    galeria: [{ src: 'imagenes/productos/pulsera-tres-treboles.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Pulsera en tono plateado con tres dijes de trébol de 4 hojas en circonias rosa, fucsia y café, sobre cadena fina.',
     detalles: ['Material: por definir'], tallas: LARGOS_PULSERA, colores: [] },
 
-  { codigo: 'BYM-PUL-002', nombre: 'Tobillera Bolitas', sub: 'pulseras',
-    galeria: [{ src: 'imagenes/productos/tobillera-bolitas.jpg', etiqueta: 'frente' }],
-    precio: 0, desc: 'Tobillera de bolitas. (Ejemplo.)',
-    detalles: ['Material: por definir'], tallas: LARGOS_PULSERA, colores: [] }
+  { codigo: 'BYM-DIJ-001', nombre: 'Dije Candado y Llave de Corazón', sub: 'dijes',
+    galeria: [{ src: 'imagenes/productos/dije-candado-llave-corazon.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Dije doble en tono plateado: candado en forma de corazón cubierto de circonias con ojo de cerradura, y una pequeña llave a juego.',
+    detalles: ['Material: por definir', 'Incluye candado y llave'], tallas: TALLA_UNICA, colores: [] },
+
+  { codigo: 'BYM-DIJ-002', nombre: 'Dije Set Viajera (Pasaporte, Mundo y Avión)', sub: 'dijes',
+    galeria: [{ src: 'imagenes/productos/dije-set-viajera-pasaporte-mundo-avion.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Set de 3 dijes en tono plateado con temática de viaje: pasaporte, globo terráqueo en esmalte azul con brillo, y avión.',
+    detalles: ['Material: por definir', 'Incluye 3 dijes'], tallas: TALLA_UNICA, colores: [] },
+
+  { codigo: 'BYM-BOL-001', nombre: 'Mini Bolso Acolchado Beige', sub: 'bolsos',
+    galeria: [{ src: 'imagenes/productos/bolso-mini-acolchado-beige.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Mini bolso de mano acolchado en beige, asas anudadas, correa de eslabones de resina, dije de cordón trenzado y llavero decorativo.',
+    detalles: ['Material: por definir', 'Incluye correa y llavero'], tallas: TALLA_UNICA, colores: [] },
+
+  { codigo: 'BYM-CEL-001', nombre: 'Funda Tarjetera Floral Rosa para Celular', sub: 'celular',
+    galeria: [{ src: 'imagenes/productos/funda-celular-floral-rosa.jpg', etiqueta: 'frente' }],
+    precio: 0, desc: 'Funda tipo tarjetero/porta-celular con estampado floral rosa, correa de cordón trenzado blanco y azul, con dije de flor tipo margarita.',
+    detalles: ['Material: por definir', 'Incluye correa y dije'], tallas: TALLA_UNICA, colores: [] }
 ];
 
 // ============ RENDER ============
