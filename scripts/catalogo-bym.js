@@ -2,8 +2,11 @@
 document.getElementById('whatsapp-float').href = 'https://wa.me/' + window.BYM_WHATSAPP;
 
 // --- Tallas / medidas por tipo de pieza ---
-const TALLAS_ANILLO   = ['5', '6', '7', '8', '9', '10', '11', '12'];   // numeración estándar
-const LARGOS_CADENA   = ['40 cm', '45 cm', '50 cm', '55 cm', '60 cm'];
+// Anillos y collares: pedido explícito de Lina -- nada de tallaje numérico/por largo, se
+// manejan en una medida estándar única (ambos son ajustables: anillo giratorio/abierto,
+// collar con cadena de extensión en el cierre).
+const TALLA_UNICA_ANILLO  = ['Talla única (ajustable)'];
+const TALLA_UNICA_COLLAR  = ['Largo estándar (ajustable)'];
 const LARGOS_PULSERA  = ['16 cm', '17 cm', '18 cm', '19 cm', 'Ajustable'];
 const TALLA_UNICA     = ['Única'];
 
@@ -31,7 +34,7 @@ const SUBCATS = [
 //   precio: 0,                            // COP, un solo precio por pieza
 //   desc: 'Descripción breve.',
 //   detalles: ['Detalle 1', 'Detalle 2'],
-//   tallas: TALLAS_ANILLO,                // o LARGOS_CADENA / LARGOS_PULSERA / TALLA_UNICA
+//   tallas: TALLA_UNICA_ANILLO,                // o TALLA_UNICA_COLLAR / LARGOS_PULSERA / TALLA_UNICA
 //   colores: []                           // <-- SE DEJA EN BLANCO. Al agregar valores
 //                                         //     (['Dorado','Plateado',...]) el modal muestra
 //                                         //     los chips de color automáticamente.
@@ -53,32 +56,32 @@ const productos = [
   { codigo: 'BYM-ANI-001', nombre: 'Anillo Flor con Circonias', sub: 'anillos',
     galeria: [{ src: 'imagenes/productos/anillo-flor-circonias.jpg', etiqueta: 'frente' }],
     precio: 27000, desc: 'Anillo en tono plateado con una flor tipo margarita cubierta de circonias y piedra central. Ajustable (giratorio).',
-    detalles: ['Bañado en rodio', 'Ajustable/giratorio', 'Diseño floral con circonias', '$27.000 [confirmado en catálogo + $2.000]'], tallas: TALLAS_ANILLO, colores: [] },
+    detalles: ['Bañado en rodio', 'Ajustable/giratorio', 'Diseño floral con circonias', '$27.000 [confirmado en catálogo + $2.000]'], tallas: TALLA_UNICA_ANILLO, colores: [] },
 
   { codigo: 'BYM-ANI-002', nombre: 'Anillo Tres Mariposas', sub: 'anillos',
     galeria: [{ src: 'imagenes/productos/anillo-tres-mariposas.jpg', etiqueta: 'frente' }],
     precio: 22000, desc: 'Anillo en tono dorado con tres mariposas de circonias en fila sobre la banda.',
-    detalles: ['Bañado en rodio', 'Diseño de mariposas con circonias', '$22.000 [confirmado en catálogo + $2.000]'], tallas: TALLAS_ANILLO, colores: [] },
+    detalles: ['Bañado en rodio', 'Diseño de mariposas con circonias', '$22.000 [confirmado en catálogo + $2.000]'], tallas: TALLA_UNICA_ANILLO, colores: [] },
 
   { codigo: 'BYM-ANI-003', nombre: 'Anillo Tréboles Dorados', sub: 'anillos',
     galeria: [{ src: 'imagenes/productos/anillo-treboles-dorados.jpg', etiqueta: 'frente' }],
     precio: 22000, desc: 'Anillo ajustable en tono dorado con dos tréboles de circonias sobre banda texturizada.',
-    detalles: ['Bañado en rodio', 'Ajustable', '$22.000 [estimado según anillos de circonias del catálogo + $2.000]'], tallas: TALLAS_ANILLO, colores: [] },
+    detalles: ['Bañado en rodio', 'Ajustable', '$22.000 [estimado según anillos de circonias del catálogo + $2.000]'], tallas: TALLA_UNICA_ANILLO, colores: [] },
 
   { codigo: 'BYM-COL-001', nombre: 'Collar Dije "Fe" con Corazón de Circonias', sub: 'collares',
     galeria: [{ src: 'imagenes/productos/collar-dije-fe-corazon.jpg', etiqueta: 'frente' }],
     precio: 27000, desc: 'Collar de cadena fina dorada con dije "Fe" en letra cursiva y un pequeño corazón de circonias.',
-    detalles: ['Bañado en rodio', 'Cierre: mosquetón', '$27.000 [estimado según collares con dije pequeño del catálogo + $2.000]'], tallas: LARGOS_CADENA, colores: [] },
+    detalles: ['Bañado en rodio', 'Cierre: mosquetón', '$27.000 [estimado según collares con dije pequeño del catálogo + $2.000]'], tallas: TALLA_UNICA_COLLAR, colores: [] },
 
   { codigo: 'BYM-COL-002', nombre: 'Collar Dije Tortuga Marina', sub: 'collares',
     galeria: [{ src: 'imagenes/productos/collar-dije-tortuga-marina.jpg', etiqueta: 'frente' }],
     precio: 27000, desc: 'Collar de cadena dorada tipo veneciana con dije de tortuga marina en esmalte azul y verde.',
-    detalles: ['Bañado en rodio', 'Cierre: mosquetón', '$27.000 [confirmado en catálogo + $2.000]'], tallas: LARGOS_CADENA, colores: [] },
+    detalles: ['Bañado en rodio', 'Cierre: mosquetón', '$27.000 [confirmado en catálogo + $2.000]'], tallas: TALLA_UNICA_COLLAR, colores: [] },
 
   { codigo: 'BYM-COL-003', nombre: 'Set Collar y Aretes Sol y Estrellas', sub: 'collares',
     galeria: [{ src: 'imagenes/productos/set-collar-aretes-sol-estrellas.jpg', etiqueta: 'set' }],
     precio: 32000, desc: 'Set de collar y aretes en tono dorado: dije de sol con circonias, luna con circonias azules y estrella colgante, más aretes de estrella a juego.',
-    detalles: ['Bañado en rodio', 'Incluye collar + par de aretes', '$32.000 [estimado según sets de collar+dije variado del catálogo + $2.000]'], tallas: LARGOS_CADENA, colores: [] },
+    detalles: ['Bañado en rodio', 'Incluye collar + par de aretes', '$32.000 [estimado según sets de collar+dije variado del catálogo + $2.000]'], tallas: TALLA_UNICA_COLLAR, colores: [] },
 
   { codigo: 'BYM-ARE-001', nombre: 'Aretes Corazones Dorados con Circonias', sub: 'aretes',
     galeria: [{ src: 'imagenes/productos/aretes-corazones-dorados.jpg', etiqueta: 'par' }],
