@@ -47,8 +47,9 @@ Accessories-BYM/
 
 ## Qué falta llenar (todo marcado con `TODO` o "Ejemplo" en el código)
 
-1. ~~**WhatsApp**~~ — listo: `window.BYM_WHATSAPP = '573104135834'` en `index.html` (pie de
-   página y botón flotante lo toman de ahí).
+1. **WhatsApp**: `window.BYM_WHATSAPP = '57300000000'` en `index.html` es un valor de PRUEBA
+   (pie de página y botón flotante lo toman de ahí) — reemplázalo por el número real de Lina
+   antes de publicar.
 2. **Precios**: las 12 piezas montadas desde "Joyeria By Lina" quedaron en $0 ("por definir")
    — edítalos en `datos/lista-precios.md`.
 3. **Más piezas reales**: agregar objetos nuevos al array `productos` en
