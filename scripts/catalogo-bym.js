@@ -135,15 +135,43 @@ function elegirSubcat(id) {
   renderSubcats(); renderGrid();
 }
 
+// Agrega la pieza al carrito directo desde la tarjeta (sin abrir el modal), con la primera
+// talla/medida y sin color (los colores están en blanco a propósito, ver mas arriba). Si el
+// precio todavia no está definido, el botón ya viene deshabilitado (ver crearCard) y este
+// handler ni se llega a ejecutar -- se deja el guard igual por si acaso.
+function agregarRapidoAlCarrito(codigo, boton) {
+  const p = buscarProducto(codigo);
+  if (!p || !p.precio) return;
+  addToCart({
+    codigo: p.codigo, nombre: p.nombre, img: (p.galeria && p.galeria[0]) ? p.galeria[0].src : '',
+    talla: (p.tallas && p.tallas[0]) || null, color: null, cantidad: 1,
+    precioUnitario: Cotizador.precioSegunEscala(p.precio, 1).unitario
+  });
+  if (boton) { boton.classList.remove('agregado'); void boton.offsetWidth; boton.classList.add('agregado'); }
+}
+
+// Cada tarjeta trae SU PROPIO botón de "Agregar al carrito" (pedido explícito) además de que
+// toda la tarjeta se pueda clicar para abrir el detalle -- el botón usa stopPropagation para
+// no disparar también el modal.
 function crearCard(p) {
   const portada = (p.galeria && p.galeria[0]) ? p.galeria[0].src : '';
+  const nombreEscapado = p.nombre.replace(/'/g, "");
   const card = document.createElement('div');
   card.className = 'product-card';
   card.onclick = () => abrirProducto(p.codigo);
   card.innerHTML =
-    '<img src="' + portada + '" alt="' + p.nombre + '" loading="lazy" onerror="manejarErrorImagen(this,\'' + p.nombre.replace(/'/g, "") + '\')">' +
-    '<div class="info"><p class="nombre">' + p.nombre + '</p>' +
-    '<p class="precio">' + (p.precio ? formatCOP(p.precio) : 'Precio por definir') + '</p></div>';
+    '<div class="foto-wrap"><img src="' + portada + '" alt="' + p.nombre + '" loading="lazy" onerror="manejarErrorImagen(this,\'' + nombreEscapado + '\')"></div>' +
+    '<div class="info">' +
+      '<p class="nombre">' + p.nombre + '</p>' +
+      '<div class="card-add-row">' +
+        '<p class="precio">' + (p.precio ? formatCOP(p.precio) : 'Precio por definir') + '</p>' +
+        '<button type="button" class="card-add-btn" title="Agregar al carrito" aria-label="Agregar ' + nombreEscapado + ' al carrito"' + (p.precio ? '' : ' disabled') + '>' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  const botonAgregar = card.querySelector('.card-add-btn');
+  botonAgregar.onclick = (e) => { e.stopPropagation(); agregarRapidoAlCarrito(p.codigo, botonAgregar); };
   return card;
 }
 

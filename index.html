@@ -31,9 +31,12 @@
     .subcat-chip {
       border: 1px solid var(--card-border); background: #fff; color: var(--text-main);
       padding: 0.5rem 1.05rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
-      cursor: pointer; letter-spacing: 0.03em;
+      cursor: pointer; letter-spacing: 0.03em; transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
     }
-    .subcat-chip.activa { background: var(--accent-color); border-color: var(--accent-color); color: #fff; }
+    .subcat-chip:hover { background: var(--pastel-lavanda); transform: translateY(-1px); }
+    .subcat-chip:active { transform: scale(0.96); }
+    .subcat-chip.activa { background: var(--accent-gradient); border-color: transparent; color: #fff; box-shadow: 0 6px 16px rgba(134, 114, 172, 0.35); }
+    .subcat-chip.activa:hover { background: var(--accent-gradient); transform: translateY(-1px); }
 
     .layout { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start; }
     @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } }
@@ -44,24 +47,46 @@
 
     .grid-vacio {
       grid-column: 1 / -1; text-align: center; padding: 3.5rem 1.5rem; color: var(--text-muted);
-      background: #faf7f0; border: 1px dashed var(--card-border); border-radius: 16px;
+      background: var(--pastel-lavanda); border: 1px dashed var(--card-border); border-radius: 16px;
     }
     .grid-vacio h3 { margin: 0 0 0.4rem; color: var(--text-main); font-size: 1.05rem; }
     .grid-vacio p { margin: 0; font-size: 0.9rem; }
 
+    /* Tarjeta de producto: fondo blanco (para que la foto se lea limpia) sobre el fondo pastel
+       de la página, con sombra tenue en tono del acento al pasar el mouse -- más "viva" que una
+       sombra gris genérica. La imagen hace un leve zoom al hover (micro-interacción). */
     .product-card {
-      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px;
       overflow: hidden; cursor: pointer; position: relative;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.2s, transform 0.2s;
+      box-shadow: 0 2px 8px rgba(134, 114, 172, 0.08); transition: box-shadow 0.25s ease, transform 0.25s ease;
     }
-    .product-card:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.10); transform: translateY(-3px); }
-    .product-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: #f3efe7; }
-    .product-card .info { padding: 0.7rem 0.85rem; }
+    .product-card:hover { box-shadow: 0 16px 32px rgba(134, 114, 172, 0.22); transform: translateY(-4px); }
+    .product-card .foto-wrap { overflow: hidden; aspect-ratio: 1 / 1; background: var(--pastel-lavanda); }
+    .product-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
+    .product-card:hover img { transform: scale(1.06); }
+    .product-card .info { padding: 0.7rem 0.85rem 0.85rem; }
     .product-card .info .nombre { font-weight: 600; font-size: 0.86rem; margin: 0 0 0.2rem; line-height: 1.25; }
-    .product-card .info .precio { color: var(--accent-color); font-weight: 700; font-size: 0.85rem; }
+    .product-card .info .precio { color: var(--accent-color-dark); font-weight: 700; font-size: 0.85rem; }
+
+    /* Botón rápido "Agregar al carrito": cada pieza lo tiene, sin necesidad de abrir el modal
+       primero. Usa la talla/medida por defecto de la pieza; si el precio todavía está "por
+       definir" queda deshabilitado, igual que el botón del modal. */
+    .card-add-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+    .card-add-btn {
+      flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;
+      background: var(--accent-gradient); color: #fff; box-shadow: 0 4px 12px rgba(134, 114, 172, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+    .card-add-btn:hover { filter: brightness(1.08); box-shadow: 0 6px 16px rgba(134, 114, 172, 0.5); }
+    .card-add-btn:active { transform: scale(0.9); }
+    .card-add-btn:disabled { background: #E3DCEF; color: #b3a6c9; box-shadow: none; cursor: not-allowed; }
+    .card-add-btn svg { width: 16px; height: 16px; }
+    @keyframes cardAddPop { 0% { transform: scale(1); } 45% { transform: scale(1.35) rotate(90deg); } 100% { transform: scale(1) rotate(0deg); } }
+    .card-add-btn.agregado { animation: cardAddPop 0.4s ease; }
 
     /* ===== Cotizador al por mayor (lateral) ===== */
-    .cotizador { background: #faf7f0; border: 1px solid var(--card-border); border-radius: 14px; padding: 1.25rem; position: sticky; top: 1.5rem; }
+    .cotizador { background: linear-gradient(160deg, var(--pastel-lavanda) 0%, var(--pastel-rosa) 100%); border: 1px solid var(--card-border); border-radius: 14px; padding: 1.25rem; position: sticky; top: 1.5rem; }
     .cotizador h3 { margin: 0 0 0.9rem; font-size: 1rem; }
     .cotizador .vacio { color: var(--text-muted); font-size: 0.86rem; line-height: 1.5; }
     .calc-group { margin-bottom: 0.85rem; }
@@ -78,19 +103,19 @@
     .calc-tip { font-size: 0.78rem; border-radius: 10px; padding: 0.5rem 0.65rem; margin-top: 0.7rem; line-height: 1.4; }
 
     /* ===== Modal de producto ===== */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(20,16,10,0.5); z-index: 300; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(46, 36, 56, 0.55); z-index: 300; display: none; align-items: center; justify-content: center; padding: 1rem; }
     .modal-overlay.open { display: flex; }
-    .modal-box { background: #fff; border-radius: 16px; max-width: 940px; width: 100%; max-height: 92vh; overflow-y: auto; position: relative; padding: 1.5rem; }
+    .modal-box { background: #fff; border-radius: 16px; max-width: 940px; width: 100%; max-height: 92vh; overflow-y: auto; position: relative; padding: 1.5rem; border: 1px solid var(--card-border); }
     .modal-close { position: absolute; top: 0.9rem; right: 1rem; background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--text-muted); line-height: 1; }
     .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; }
     @media (max-width: 720px) { .modal-grid { grid-template-columns: 1fr; } }
 
     .modal-galeria { display: flex; gap: 0.6rem; }
     .modal-miniaturas { display: flex; flex-direction: column; gap: 0.5rem; width: 62px; flex-shrink: 0; max-height: 430px; overflow-y: auto; }
-    .modal-miniaturas img { width: 62px; height: 62px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid var(--card-border); background: #f3efe7; }
+    .modal-miniaturas img { width: 62px; height: 62px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid var(--card-border); background: var(--pastel-lavanda); }
     .modal-miniaturas img.activa { border-color: var(--accent-color); }
     .modal-imagen-principal { flex: 1; min-width: 0; position: relative; padding: 0 2.4rem; }
-    .modal-imagen-principal img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 12px; background: #f3efe7; display: block; }
+    .modal-imagen-principal img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 12px; background: var(--pastel-lavanda); display: block; }
     .modal-galeria-flecha {
       position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
       width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;

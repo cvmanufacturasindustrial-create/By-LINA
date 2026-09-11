@@ -1,39 +1,42 @@
-/* Carrito flotante minimalista. Vive justo encima del botón de WhatsApp (56px + 14px de
-   separación = 88px desde abajo) y respeta la línea gráfica de la página vía --accent-color
-   (naranja en CV; ver el bloque body.modo-bolsas en catalogo_interactivo.html para Bolsas). */
+/* Carrito flotante — rediseño pastel (Pantone 2635 C + lavanda/rosa, ver styles/branding.css).
+   Vive justo encima del botón de WhatsApp (56px + 14px de separación = 88px desde abajo). */
 
 .cart-float-wrap { position: fixed; right: 18px; bottom: 88px; z-index: 145; }
 
 .cart-fab {
   position: relative; width: 56px; height: 56px; border-radius: 50%; border: none;
-  background: var(--accent-gradient, var(--accent-color, #f97316)); color: #fff; cursor: pointer;
+  background: var(--accent-gradient, var(--accent-color, #8672AC)); color: #fff; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.5);
+  box-shadow: 0 8px 26px rgba(134, 114, 172, 0.45);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.cart-fab:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(15, 23, 42, 0.6); }
+.cart-fab:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 32px rgba(134, 114, 172, 0.55); }
+.cart-fab:active { transform: scale(0.95); }
 .cart-fab svg { display: block; }
 
 /* Insignia con el número de unidades. Solo se ve si hay algo en el carrito. */
 .cart-badge {
   position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 4px;
-  border-radius: 999px; background: #ef4444; color: #fff; font-size: 0.7rem; font-weight: 700;
+  border-radius: 999px; background: #F0729B; color: #fff; font-size: 0.7rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center; line-height: 1;
   box-shadow: 0 0 0 2px #fff; opacity: 0; transform: scale(0.6); transition: opacity 0.15s ease, transform 0.15s ease;
 }
 .cart-badge.visible { opacity: 1; transform: scale(1); }
 
 /* Notificación visual al agregar un producto: pulso en el botón + rebote en la insignia. */
-@keyframes cartFabPulse { 0% { transform: scale(1); } 35% { transform: scale(1.18); } 100% { transform: scale(1); } }
-@keyframes cartBadgeBump { 0% { transform: scale(1); } 40% { transform: scale(1.45); } 100% { transform: scale(1); } }
+@keyframes cartFabPulse { 0% { transform: scale(1); } 35% { transform: scale(1.2); } 100% { transform: scale(1); } }
+@keyframes cartBadgeBump { 0% { transform: scale(1); } 40% { transform: scale(1.5); } 100% { transform: scale(1); } }
 .cart-fab.recien-agregado { animation: cartFabPulse 0.4s ease; }
 .cart-fab.recien-agregado .cart-badge { animation: cartBadgeBump 0.4s ease; }
 
-/* Panel: tarjeta blanca limpia, se abre encima del botón con un fade + escala sutil. */
+/* Panel: pastel suave (lavanda muy claro) en vez de blanco plano, encima del botón con fade +
+   escala. Encabezado con degradado tenue para que se sienta parte del mismo sistema visual
+   que la cabecera/hero del catálogo, no un panel aparte. */
 .cart-panel {
-  position: absolute; right: 0; bottom: 70px; width: min(340px, calc(100vw - 36px));
-  max-height: min(70vh, 520px); background: #fff; border-radius: 18px;
-  box-shadow: 0 16px 48px rgba(15, 23, 42, 0.22); border: 1px solid rgba(15, 23, 42, 0.06);
+  position: absolute; right: 0; bottom: 70px; width: min(360px, calc(100vw - 36px));
+  max-height: min(82vh, 640px); background: linear-gradient(180deg, #FDFBFF 0%, #FBF7FD 100%);
+  border-radius: 18px;
+  box-shadow: 0 20px 52px rgba(134, 114, 172, 0.28); border: 1px solid var(--card-border, #E9DEF3);
   display: flex; flex-direction: column; overflow: hidden;
   transform-origin: bottom right; transform: scale(0.92) translateY(8px); opacity: 0; pointer-events: none;
   transition: transform 0.16s ease, opacity 0.16s ease;
@@ -42,46 +45,81 @@
 
 .cart-panel-head {
   display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.1rem;
-  font-weight: 700; color: #1e293b; border-bottom: 1px solid #f1f1f0;
+  font-weight: 700; color: var(--text-main, #2E2438);
+  background: linear-gradient(120deg, var(--pastel-lavanda, #F3EEFB), var(--pastel-rosa, #FCEFF6));
+  border-bottom: 1px solid var(--card-border, #E9DEF3); flex-shrink: 0;
 }
-.cart-panel-close { background: none; border: none; font-size: 1.3rem; line-height: 1; color: #94a3b8; cursor: pointer; padding: 0 0.2rem; }
-.cart-panel-close:hover { color: #1e293b; }
+.cart-panel-close { background: none; border: none; font-size: 1.3rem; line-height: 1; color: var(--text-muted, #8D82A0); cursor: pointer; padding: 0 0.2rem; }
+.cart-panel-close:hover { color: var(--accent-color-dark, #6E5A93); }
 
-.cart-items { flex: 1; overflow-y: auto; padding: 0.6rem 0.8rem; display: flex; flex-direction: column; gap: 0.6rem; }
-.cart-empty { color: #94a3b8; font-size: 0.88rem; text-align: center; padding: 1.5rem 0.5rem; }
+.cart-items {
+  flex: 1 1 auto; min-height: 140px; overflow-y: auto; overscroll-behavior: contain;
+  padding: 0.6rem 0.8rem; display: flex; flex-direction: column; gap: 0.6rem;
+  scrollbar-width: thin; scrollbar-color: #D9CCEC transparent;
+  border-bottom: 1px solid var(--card-border, #E9DEF3);
+}
+.cart-items::-webkit-scrollbar { width: 7px; }
+.cart-items::-webkit-scrollbar-track { background: transparent; }
+.cart-items::-webkit-scrollbar-thumb { background: #D9CCEC; border-radius: 999px; }
+.cart-items::-webkit-scrollbar-thumb:hover { background: var(--accent-color, #8672AC); }
+.cart-empty { color: var(--text-muted, #8D82A0); font-size: 0.88rem; text-align: center; padding: 1.5rem 0.5rem; }
 
-/* Cada fila: imagen primero, nombre después (orden pedido explícitamente). */
+/* Cada fila: imagen primero, nombre después. Fondo blanco puro sobre el panel pastel, para que
+   las fotos de las piezas se lean limpias; el toque pastel queda en el borde. */
 .cart-item {
-  display: flex; gap: 0.7rem; padding: 0.6rem; border-radius: 12px; background: #fafafa;
-  border: 1px solid #f0f0ee;
+  display: flex; gap: 0.7rem; padding: 0.6rem; border-radius: 12px; background: #ffffff;
+  border: 1px solid var(--card-border, #E9DEF3); transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
-.cart-item-img { width: 52px; height: 52px; border-radius: 9px; object-fit: cover; flex-shrink: 0; background: #eee; }
+.cart-item:hover { box-shadow: 0 4px 14px rgba(134, 114, 172, 0.18); transform: translateY(-1px); }
+.cart-item-img { width: 52px; height: 52px; border-radius: 9px; object-fit: cover; flex-shrink: 0; background: var(--pastel-lavanda, #F3EEFB); }
 .cart-item-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
-.cart-item-nombre { font-weight: 600; font-size: 0.86rem; color: #1e293b; line-height: 1.25; }
-.cart-item-detalle { font-size: 0.72rem; color: #94a3b8; }
-.cart-item-perso { font-size: 0.72rem; color: var(--accent-color, #f97316); }
-.cart-item-precio { font-size: 0.78rem; color: #1e293b; }
+.cart-item-nombre { font-weight: 600; font-size: 0.86rem; color: var(--text-main, #2E2438); line-height: 1.25; }
+.cart-item-detalle { font-size: 0.72rem; color: var(--text-muted, #8D82A0); }
+.cart-item-perso { font-size: 0.72rem; color: var(--accent-color, #8672AC); }
+.cart-item-precio { font-size: 0.78rem; color: var(--text-main, #2E2438); }
 .cart-item-row { display: flex; align-items: center; justify-content: space-between; margin-top: 0.15rem; }
 .cart-item-qty { display: flex; align-items: center; gap: 0.4rem; }
 .cart-item-qty button {
-  width: 22px; height: 22px; border-radius: 6px; border: 1px solid #e2e2df; background: #fff;
-  color: #1e293b; cursor: pointer; line-height: 1; font-size: 0.9rem;
+  width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--card-border, #E9DEF3); background: #fff;
+  color: var(--text-main, #2E2438); cursor: pointer; line-height: 1; font-size: 0.9rem; transition: background 0.15s ease;
 }
+.cart-item-qty button:hover { background: var(--pastel-lavanda, #F3EEFB); }
 .cart-item-qty span { font-size: 0.82rem; min-width: 1.1rem; text-align: center; }
-.cart-item-remove { background: none; border: none; color: #ef4444; font-size: 0.7rem; cursor: pointer; padding: 0; }
-.cart-item-subtotal { font-weight: 700; font-size: 0.84rem; color: #1e293b; }
+.cart-item-remove {
+  display: inline-flex; align-items: center; gap: 0.3rem; background: #FCEFF6; border: 1px solid #F6D6E5;
+  color: #C6467E; font-size: 0.72rem; font-weight: 600; cursor: pointer; padding: 0.3rem 0.55rem;
+  border-radius: 8px; margin-top: 0.3rem; transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cart-item-remove:hover { background: #FADCE9; border-color: #F0B8D2; }
+.cart-item-subtotal { font-weight: 700; font-size: 0.84rem; color: var(--text-main, #2E2438); }
 
-.cart-panel-footer { padding: 0.8rem 1.1rem 1rem; border-top: 1px solid #f1f1f0; display: flex; flex-direction: column; gap: 0.5rem; }
-.cart-summary-row { display: flex; justify-content: space-between; font-size: 0.82rem; color: #475569; }
-.cart-summary-row.total { font-weight: 700; font-size: 0.98rem; color: #1e293b; padding-top: 0.3rem; border-top: 1px dashed #e5e5e0; }
-.cart-summary-note { font-size: 0.68rem; color: #94a3b8; }
+.cart-panel-footer {
+  flex-shrink: 0; max-height: 58vh; overflow-y: auto;
+  padding: 0.8rem 1.1rem 1rem; border-top: 1px solid var(--card-border, #E9DEF3);
+  display: flex; flex-direction: column; gap: 0.5rem;
+  scrollbar-width: thin; scrollbar-color: #D9CCEC transparent;
+}
+.cart-summary-row { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted, #8D82A0); }
+.cart-summary-row.total { font-weight: 700; font-size: 0.98rem; color: var(--text-main, #2E2438); padding-top: 0.3rem; border-top: 1px dashed var(--card-border, #E9DEF3); }
+.cart-summary-note { font-size: 0.68rem; color: var(--text-muted, #8D82A0); }
 
-.cart-btn { border: none; border-radius: 10px; padding: 0.6rem 0.8rem; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
-.cart-btn-pagar { background: var(--accent-gradient, var(--accent-color, #f97316)); color: #fff; }
-.cart-btn-whatsapp { background: #25d366; color: #fff; }
-.cart-btn-seguir { background: none; color: #64748b; }
+.cart-btn {
+  border: none; border-radius: 10px; padding: 0.65rem 0.8rem; font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; transition: filter 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+.cart-btn:active { transform: scale(0.97); }
+.cart-btn-pagar { background: var(--accent-gradient, var(--accent-color, #8672AC)); color: #fff; box-shadow: 0 6px 16px rgba(134, 114, 172, 0.32); }
+.cart-btn-pagar:hover { filter: brightness(1.06); }
+.cart-btn-whatsapp { background: #25d366; color: #fff; box-shadow: 0 6px 16px rgba(37, 211, 102, 0.32); }
+.cart-btn-whatsapp:hover { filter: brightness(1.05); }
+.cart-btn-seguir { background: none; color: var(--text-muted, #8D82A0); }
+.cart-btn-seguir:hover { color: var(--accent-color-dark, #6E5A93); }
 
 @media (max-width: 480px) {
   .cart-float-wrap { right: 12px; bottom: 82px; }
-  .cart-panel { width: calc(100vw - 24px); }
+  .cart-panel { width: calc(100vw - 24px); max-height: min(85vh, 600px); }
+  .cart-items { min-height: 120px; }
+}
+@media (min-width: 641px) {
+  .cart-panel { width: min(400px, calc(100vw - 48px)); max-height: min(85vh, 720px); }
 }

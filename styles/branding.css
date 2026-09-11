@@ -1,22 +1,33 @@
 /* Accessories BYM — identidad visual base.
    Estructura y nombres de clase tomados de "Bolsas De Colombia" (proyecto hermano); solo
    cambia la paleta. Todo pasa por variables CSS: para cambiar la marca entera se editan los
-   valores de :root y nada más. Paleta pensada para joyería: marfil, tinta grafito y un
-   dorado champán suave como acento. */
+   valores de :root y nada más.
+
+   Rediseño pastel (pedido explícito): acento principal en Pantone 2635 C (violeta suave),
+   con tintes pastel de lavanda y rosa para el fondo del sitio y del carrito. El equivalente
+   en RGB/hex de un Pantone depende de la librería de conversión (coated/uncoated) y no hay
+   una tabla oficial de Pantone integrada aquí -- #8672AC es la aproximación más citada para
+   2635 C; si tienes el Pantone Bridge a mano y el tono no calza exacto, este es el ÚNICO
+   valor que hay que ajustar (--accent-color y --accent-gradient), el resto de la paleta se
+   deriva de ahí. */
 :root {
-  --bg-gradient: #ffffff;
-  --accent-color: #b08d57;                                   /* dorado champán: botones, precios, activos */
-  --accent-gradient: linear-gradient(135deg, #c6a26b 0%, #a97f4a 100%);
+  --accent-color: #8672AC;                                          /* Pantone 2635 C (aprox.) */
+  --accent-color-dark: #6E5A93;
+  --accent-gradient: linear-gradient(135deg, #A48FC7 0%, #8672AC 100%);
+  --pastel-lavanda: #F3EEFB;
+  --pastel-rosa: #FCEFF6;
+  --pastel-menta: #EAF6F1;
+  --bg-gradient: linear-gradient(165deg, var(--pastel-lavanda) 0%, var(--pastel-rosa) 55%, #ffffff 100%);
   --card-bg: #ffffff;
-  --card-border: #ece7df;
-  --text-main: #262521;
-  --text-muted: #8a8378;
+  --card-border: #E9DEF3;
+  --text-main: #2E2438;
+  --text-muted: #8D82A0;
 }
 
 html, body {
   height: 100%; margin: 0;
   font-family: Outfit, Arial, Helvetica, sans-serif;
-  background: var(--bg-gradient); color: var(--text-main);
+  background: var(--bg-gradient); background-attachment: fixed; color: var(--text-main);
   overflow-x: hidden;
 }
 * { box-sizing: border-box; }
@@ -25,30 +36,33 @@ a { color: inherit; }
 
 /* ===== Encabezado ===== */
 .site-header {
-  background: #ffffff; border-bottom: 1px solid var(--card-border);
+  background: rgba(255,255,255,0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--card-border);
   padding: 0.9rem 1.5rem; position: sticky; top: 0; z-index: 120;
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
 }
 .logo-container { display: flex; align-items: center; gap: 0.75rem; }
 .logo-badge {
-  background: var(--accent-gradient); width: 44px; height: 44px; border-radius: 10px;
+  background: var(--accent-gradient); width: 44px; height: 44px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff;
   font-family: 'Playfair Display', Georgia, serif; letter-spacing: 0.02em;
+  box-shadow: 0 6px 16px rgba(134, 114, 172, 0.35);
 }
 .logo-text h1 { font-size: 1.05rem; margin: 0; font-weight: 600; letter-spacing: 0.04em; }
 .logo-text p { margin: 0; font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
 .site-nav { display: flex; gap: 0.4rem; align-items: center; }
 .site-nav a {
-  color: var(--text-main); text-decoration: none; padding: 0.5rem 0.85rem; border-radius: 8px;
+  color: var(--text-main); text-decoration: none; padding: 0.5rem 0.85rem; border-radius: 999px;
   font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+  transition: background 0.15s ease, color 0.15s ease;
 }
-.site-nav a:hover { background: #f7f3ec; color: var(--accent-color); }
+.site-nav a:hover { background: var(--pastel-lavanda); color: var(--accent-color-dark); }
 @media (max-width: 880px) { .site-nav a { padding: 0.5rem 0.55rem; font-size: 0.68rem; } }
 
 /* ===== Hero ===== */
 .hero {
   text-align: center; padding: 3rem 1.5rem 2.5rem;
-  background: linear-gradient(180deg, #faf6ef 0%, #ffffff 100%);
+  background: linear-gradient(180deg, var(--pastel-lavanda) 0%, var(--pastel-rosa) 60%, rgba(255,255,255,0) 100%);
   border-bottom: 1px solid var(--card-border);
 }
 .hero .hero-badge {
@@ -56,8 +70,9 @@ a { color: inherit; }
   width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 1rem;
   background: var(--accent-gradient); color: #fff;
   font-family: 'Playfair Display', Georgia, serif; font-size: 1.9rem; letter-spacing: 0.02em;
+  box-shadow: 0 10px 26px rgba(134, 114, 172, 0.32);
 }
-.hero h2 { margin: 0 0 0.35rem; font-size: 1.9rem; font-weight: 600; letter-spacing: 0.03em; }
+.hero h2 { margin: 0 0 0.35rem; font-size: 1.9rem; font-weight: 600; letter-spacing: 0.03em; color: var(--accent-color-dark); }
 .hero p { margin: 0 auto; max-width: 460px; color: var(--text-muted); font-size: 0.98rem; }
 @media (max-width: 640px) { .hero { padding: 2.25rem 1.25rem 2rem; } .hero h2 { font-size: 1.5rem; } }
 
@@ -66,12 +81,14 @@ a { color: inherit; }
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   background: var(--accent-gradient); color: #fff; border: none; border-radius: 10px;
   padding: 0.75rem 1.3rem; font-weight: 700; font-size: 0.9rem; cursor: pointer;
-  text-decoration: none; transition: filter 0.15s ease;
+  text-decoration: none; transition: filter 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  box-shadow: 0 6px 16px rgba(134, 114, 172, 0.28);
 }
-.btn:hover { filter: brightness(1.06); }
-.btn:disabled { opacity: 0.55; cursor: not-allowed; }
-.btn-outline { background: #fff; color: var(--accent-color); border: 1px solid var(--accent-color); }
-.btn-outline:hover { background: #faf6ee; filter: none; }
+.btn:hover { filter: brightness(1.07); box-shadow: 0 8px 20px rgba(134, 114, 172, 0.4); }
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; transform: none; }
+.btn-outline { background: #fff; color: var(--accent-color-dark); border: 1px solid var(--accent-color); box-shadow: none; }
+.btn-outline:hover { background: var(--pastel-lavanda); filter: none; box-shadow: none; }
 
 /* ===== Pie de página ===== */
 .site-footer {
@@ -88,4 +105,4 @@ a { color: inherit; }
   transition: transform 0.2s ease;
 }
 .whatsapp-float svg { display: block; }
-.whatsapp-float:hover { transform: translateY(-3px); }
+.whatsapp-float:hover { transform: translateY(-3px) scale(1.05); }
