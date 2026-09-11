@@ -140,6 +140,20 @@
     }
     .modal-galeria-flecha.prev { left: 0; }
     .modal-galeria-flecha.next { right: 0; }
+
+    /* Lupa interactiva: recuadro que sigue el cursor sobre la foto principal del modal y
+       muestra esa misma zona ampliada (background-image recortado). Solo se activa en
+       dispositivos con mouse real (hover:hover + pointer:fine) -- en táctil no hay "hover"
+       que dispare el efecto, así que se deja oculto y no estorba. */
+    .modal-imagen-principal img { cursor: zoom-in; }
+    .magnifier-lens {
+      position: absolute; display: none; pointer-events: none; z-index: 5;
+      width: 170px; height: 170px; border-radius: 12px; border: 2px solid var(--accent-color);
+      box-shadow: 0 10px 30px rgba(134, 114, 172, 0.35); background-repeat: no-repeat;
+      background-color: #fff;
+    }
+    @media (hover: none), (pointer: coarse) { .magnifier-lens { display: none !important; } }
+    @media (max-width: 720px) { .magnifier-lens { display: none !important; } }
     @media (max-width: 720px) {
       .modal-galeria { flex-direction: column; }
       .modal-miniaturas { flex-direction: row; width: 100%; max-height: none; overflow-x: auto; }
@@ -237,6 +251,7 @@
         <div class="modal-miniaturas" id="modal-miniaturas"></div>
         <div class="modal-imagen-principal">
           <img id="modal-img" src="" alt="">
+          <div class="magnifier-lens" id="magnifier-lens" aria-hidden="true"></div>
           <button type="button" class="modal-galeria-flecha prev" id="modal-galeria-prev" aria-label="Foto anterior" onclick="moverImagenGaleria(-1)">‹</button>
           <button type="button" class="modal-galeria-flecha next" id="modal-galeria-next" aria-label="Foto siguiente" onclick="moverImagenGaleria(1)">›</button>
         </div>

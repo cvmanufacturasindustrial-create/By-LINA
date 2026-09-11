@@ -270,6 +270,8 @@ function cerrarProducto() {
   const ov = document.getElementById('product-modal');
   ov.classList.remove('open');
   ov.setAttribute('aria-hidden', 'true');
+  const lente = document.getElementById('magnifier-lens');
+  if (lente) lente.style.display = 'none';
 }
 
 function renderGaleriaModal() {
@@ -291,6 +293,46 @@ function renderGaleriaModal() {
   principal.alt = p.nombre;
   principal.onerror = () => manejarErrorImagen(principal, p.nombre);
 }
+// ============ LUPA INTERACTIVA (imagen principal del modal) ============
+// Recuadro que sigue al cursor sobre la foto y muestra, en tiempo real, la misma zona bajo
+// el cursor ampliada (mismo <img>, con background-size más grande y background-position
+// desplazado según la posición del mouse). Solo se activa con mouse real -- en táctil no
+// existe "hover" para disparar mousemove de forma útil, así que ahí queda desactivada.
+const ZOOM_LUPA = 2.5;
+function initLupa() {
+  const cont = document.querySelector('.modal-imagen-principal');
+  const img = document.getElementById('modal-img');
+  const lente = document.getElementById('magnifier-lens');
+  if (!cont || !img || !lente) return;
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  const ocultarLente = () => { lente.style.display = 'none'; };
+  cont.addEventListener('mouseleave', ocultarLente);
+  cont.addEventListener('mousemove', (e) => {
+    if (!img.src || !img.naturalWidth) { ocultarLente(); return; }
+    const contRect = cont.getBoundingClientRect();
+    const imgRect = img.getBoundingClientRect();
+    const x = e.clientX - imgRect.left;
+    const y = e.clientY - imgRect.top;
+    if (x < 0 || y < 0 || x > imgRect.width || y > imgRect.height) { ocultarLente(); return; }
+
+    const lenteW = lente.offsetWidth, lenteH = lente.offsetHeight;
+    const minLeft = imgRect.left - contRect.left;
+    const minTop = imgRect.top - contRect.top;
+    let lenteLeft = minLeft + x - lenteW / 2;
+    let lenteTop = minTop + y - lenteH / 2;
+    lenteLeft = Math.max(minLeft, Math.min(lenteLeft, minLeft + imgRect.width - lenteW));
+    lenteTop = Math.max(minTop, Math.min(lenteTop, minTop + imgRect.height - lenteH));
+
+    lente.style.left = lenteLeft + 'px';
+    lente.style.top = lenteTop + 'px';
+    lente.style.backgroundImage = 'url(' + img.src + ')';
+    lente.style.backgroundSize = (imgRect.width * ZOOM_LUPA) + 'px ' + (imgRect.height * ZOOM_LUPA) + 'px';
+    lente.style.backgroundPosition = (-(x * ZOOM_LUPA - lenteW / 2)) + 'px ' + (-(y * ZOOM_LUPA - lenteH / 2)) + 'px';
+    lente.style.display = 'block';
+  });
+}
+
 function mostrarImagenGaleria(i) { modal.imagenActiva = i; renderGaleriaModal(); }
 function moverImagenGaleria(delta) {
   const g = modal.galeria;
@@ -371,4 +413,5 @@ window.Cotizador = Cotizador;
 renderSubcats();
 renderGrid();
 Cotizador.init();
+initLupa();
 
