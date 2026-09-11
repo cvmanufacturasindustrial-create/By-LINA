@@ -61,9 +61,25 @@
       box-shadow: 0 2px 8px rgba(134, 114, 172, 0.08); transition: box-shadow 0.25s ease, transform 0.25s ease;
     }
     .product-card:hover { box-shadow: 0 16px 32px rgba(134, 114, 172, 0.22); transform: translateY(-4px); }
-    .product-card .foto-wrap { overflow: hidden; aspect-ratio: 1 / 1; background: var(--pastel-lavanda); }
+    .product-card .foto-wrap { overflow: hidden; aspect-ratio: 1 / 1; background: var(--pastel-lavanda); position: relative; }
     .product-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
     .product-card:hover img { transform: scale(1.06); }
+
+    /* Recuadro-lupa: siempre visible sobre cada foto, marca que se puede ampliar/ver el detalle
+       (abre el mismo modal con la galería en grande al hacer clic). */
+    .zoom-badge {
+      position: absolute; top: 8px; right: 8px; z-index: 2;
+      width: 30px; height: 30px; border-radius: 8px;
+      background: rgba(255,255,255,0.85); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+      border: 1px solid rgba(134, 114, 172, 0.35);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent-color-dark); cursor: pointer; padding: 0;
+      box-shadow: 0 2px 8px rgba(134, 114, 172, 0.25);
+      transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .zoom-badge svg { width: 15px; height: 15px; }
+    .zoom-badge:hover { background: #fff; transform: scale(1.08); box-shadow: 0 4px 12px rgba(134, 114, 172, 0.4); }
+    .product-card:hover .zoom-badge { border-color: var(--accent-color); }
     .product-card .info { padding: 0.7rem 0.85rem 0.85rem; }
     .product-card .info .nombre { font-weight: 600; font-size: 0.86rem; margin: 0 0 0.2rem; line-height: 1.25; }
     .product-card .info .precio { color: var(--accent-color-dark); font-weight: 700; font-size: 0.85rem; }

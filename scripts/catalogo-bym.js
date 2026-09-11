@@ -190,8 +190,11 @@ function crearCard(p) {
   const card = document.createElement('div');
   card.className = 'product-card';
   card.onclick = () => abrirProducto(p.codigo);
+  const iconoLupa = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"></circle><line x1="20" y1="20" x2="15.4" y2="15.4"></line><line x1="10.5" y1="7.5" x2="10.5" y2="13.5"></line><line x1="7.5" y1="10.5" x2="13.5" y2="10.5"></line></svg>';
   card.innerHTML =
-    '<div class="foto-wrap"><img src="' + portada + '" alt="' + p.nombre + '" loading="lazy" onerror="manejarErrorImagen(this,\'' + nombreEscapado + '\')"></div>' +
+    '<div class="foto-wrap"><img src="' + portada + '" alt="' + p.nombre + '" loading="lazy" onerror="manejarErrorImagen(this,\'' + nombreEscapado + '\')">' +
+      '<button type="button" class="zoom-badge" title="Ver en detalle" aria-label="Ver ' + nombreEscapado + ' en detalle">' + iconoLupa + '</button>' +
+    '</div>' +
     '<div class="info">' +
       '<p class="nombre">' + p.nombre + '</p>' +
       '<div class="card-add-row">' +
