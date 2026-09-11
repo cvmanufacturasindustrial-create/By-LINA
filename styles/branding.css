@@ -1,0 +1,91 @@
+/* Accessories BYM — identidad visual base.
+   Estructura y nombres de clase tomados de "Bolsas De Colombia" (proyecto hermano); solo
+   cambia la paleta. Todo pasa por variables CSS: para cambiar la marca entera se editan los
+   valores de :root y nada más. Paleta pensada para joyería: marfil, tinta grafito y un
+   dorado champán suave como acento. */
+:root {
+  --bg-gradient: #ffffff;
+  --accent-color: #b08d57;                                   /* dorado champán: botones, precios, activos */
+  --accent-gradient: linear-gradient(135deg, #c6a26b 0%, #a97f4a 100%);
+  --card-bg: #ffffff;
+  --card-border: #ece7df;
+  --text-main: #262521;
+  --text-muted: #8a8378;
+}
+
+html, body {
+  height: 100%; margin: 0;
+  font-family: Outfit, Arial, Helvetica, sans-serif;
+  background: var(--bg-gradient); color: var(--text-main);
+  overflow-x: hidden;
+}
+* { box-sizing: border-box; }
+h1, h2, h3, .marca-serif { font-family: 'Playfair Display', Georgia, serif; }
+a { color: inherit; }
+
+/* ===== Encabezado ===== */
+.site-header {
+  background: #ffffff; border-bottom: 1px solid var(--card-border);
+  padding: 0.9rem 1.5rem; position: sticky; top: 0; z-index: 120;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.logo-container { display: flex; align-items: center; gap: 0.75rem; }
+.logo-badge {
+  background: var(--accent-gradient); width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff;
+  font-family: 'Playfair Display', Georgia, serif; letter-spacing: 0.02em;
+}
+.logo-text h1 { font-size: 1.05rem; margin: 0; font-weight: 600; letter-spacing: 0.04em; }
+.logo-text p { margin: 0; font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.site-nav { display: flex; gap: 0.4rem; align-items: center; }
+.site-nav a {
+  color: var(--text-main); text-decoration: none; padding: 0.5rem 0.85rem; border-radius: 8px;
+  font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.site-nav a:hover { background: #f7f3ec; color: var(--accent-color); }
+@media (max-width: 880px) { .site-nav a { padding: 0.5rem 0.55rem; font-size: 0.68rem; } }
+
+/* ===== Hero ===== */
+.hero {
+  text-align: center; padding: 3rem 1.5rem 2.5rem;
+  background: linear-gradient(180deg, #faf6ef 0%, #ffffff 100%);
+  border-bottom: 1px solid var(--card-border);
+}
+.hero .hero-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 1rem;
+  background: var(--accent-gradient); color: #fff;
+  font-family: 'Playfair Display', Georgia, serif; font-size: 1.9rem; letter-spacing: 0.02em;
+}
+.hero h2 { margin: 0 0 0.35rem; font-size: 1.9rem; font-weight: 600; letter-spacing: 0.03em; }
+.hero p { margin: 0 auto; max-width: 460px; color: var(--text-muted); font-size: 0.98rem; }
+@media (max-width: 640px) { .hero { padding: 2.25rem 1.25rem 2rem; } .hero h2 { font-size: 1.5rem; } }
+
+/* ===== Botón genérico ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  background: var(--accent-gradient); color: #fff; border: none; border-radius: 10px;
+  padding: 0.75rem 1.3rem; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+  text-decoration: none; transition: filter 0.15s ease;
+}
+.btn:hover { filter: brightness(1.06); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-outline { background: #fff; color: var(--accent-color); border: 1px solid var(--accent-color); }
+.btn-outline:hover { background: #faf6ee; filter: none; }
+
+/* ===== Pie de página ===== */
+.site-footer {
+  border-top: 1px solid var(--card-border); color: var(--text-muted);
+  text-align: center; font-size: 0.85rem; padding: 2rem 1rem; margin-top: 2.5rem;
+}
+
+/* ===== WhatsApp flotante ===== */
+.whatsapp-float {
+  position: fixed; right: 18px; bottom: 18px; width: 56px; height: 56px;
+  background: #25D366; color: #fff; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4); z-index: 140; text-decoration: none;
+  transition: transform 0.2s ease;
+}
+.whatsapp-float svg { display: block; }
+.whatsapp-float:hover { transform: translateY(-3px); }

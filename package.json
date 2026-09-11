@@ -1,0 +1,12 @@
+{
+  "name": "accessories-bym",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Accessories BYM — catálogo web de joyería. Proyecto independiente, misma estructura que Bolsas De Colombia.",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

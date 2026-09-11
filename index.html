@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessories BYM — Joyería</title>
+  <meta name="description" content="Accessories BYM — joyería: anillos, collares, aretes y pulseras. Piezas por unidad y al por mayor.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/branding.css">
+  <link rel="stylesheet" href="styles/cart.css">
+  <!-- Módulos compartidos (misma arquitectura que Bolsas De Colombia): motores genéricos sin
+       datos propios de BYM. carrito.js necesita whatsapp.js antes; cart.js los configura.
+       NO hay visor 3D en este proyecto (pedido explícito). -->
+  <script src="scripts/whatsapp.js" defer></script>
+  <script src="scripts/carrito.js" defer></script>
+  <script src="scripts/cotizador.js" defer></script>
+  <script>window.BYM_WHATSAPP = '573000000000';   /* TODO: reemplazar por el WhatsApp real de Accessories BYM */</script>
+  <script src="scripts/cart.js" defer></script>
+
+  <style>
+    .page { max-width: 1300px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+
+    /* ===== Carrusel de subcategorías: fila de píldoras (versión simple del carrusel de Bolsas;
+       se puede evolucionar más adelante sin tocar los datos). ===== */
+    .subcats-wrap {
+      display: flex; flex-wrap: wrap; gap: 0.55rem; justify-content: center;
+      padding: 1rem 0 1.5rem; border-bottom: 1px solid var(--card-border); margin-bottom: 1.75rem;
+    }
+    .subcat-chip {
+      border: 1px solid var(--card-border); background: #fff; color: var(--text-main);
+      padding: 0.5rem 1.05rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; letter-spacing: 0.03em;
+    }
+    .subcat-chip.activa { background: var(--accent-color); border-color: var(--accent-color); color: #fff; }
+
+    .layout { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; align-items: start; }
+    @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } }
+
+    .grid-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; }
+    .grid-header .conteo { color: var(--text-muted); font-size: 0.88rem; }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.1rem; }
+
+    .grid-vacio {
+      grid-column: 1 / -1; text-align: center; padding: 3.5rem 1.5rem; color: var(--text-muted);
+      background: #faf7f0; border: 1px dashed var(--card-border); border-radius: 16px;
+    }
+    .grid-vacio h3 { margin: 0 0 0.4rem; color: var(--text-main); font-size: 1.05rem; }
+    .grid-vacio p { margin: 0; font-size: 0.9rem; }
+
+    .product-card {
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px;
+      overflow: hidden; cursor: pointer; position: relative;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .product-card:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.10); transform: translateY(-3px); }
+    .product-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; background: #f3efe7; }
+    .product-card .info { padding: 0.7rem 0.85rem; }
+    .product-card .info .nombre { font-weight: 600; font-size: 0.86rem; margin: 0 0 0.2rem; line-height: 1.25; }
+    .product-card .info .precio { color: var(--accent-color); font-weight: 700; font-size: 0.85rem; }
+
+    /* ===== Cotizador al por mayor (lateral) ===== */
+    .cotizador { background: #faf7f0; border: 1px solid var(--card-border); border-radius: 14px; padding: 1.25rem; position: sticky; top: 1.5rem; }
+    .cotizador h3 { margin: 0 0 0.9rem; font-size: 1rem; }
+    .cotizador .vacio { color: var(--text-muted); font-size: 0.86rem; line-height: 1.5; }
+    .calc-group { margin-bottom: 0.85rem; }
+    .calc-group label { display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 0.35rem; }
+    .calc-group select, .calc-group input {
+      width: 100%; padding: 0.55rem 0.7rem; border-radius: 10px; border: 1px solid var(--card-border);
+      background: #fff; color: var(--text-main); font-size: 0.9rem; font-family: inherit;
+    }
+    .calc-output { background: #fff; border: 1px solid var(--card-border); border-radius: 12px; padding: 0.75rem 0.9rem; }
+    .calc-row { display: flex; justify-content: space-between; gap: 0.5rem; font-size: 0.84rem; color: var(--text-muted); padding: 0.2rem 0; }
+    .calc-row span:last-child { color: var(--text-main); font-weight: 600; }
+    .calc-total { border-top: 1px solid var(--card-border); margin-top: 0.4rem; padding-top: 0.5rem; font-size: 0.95rem; }
+    .calc-total span { color: var(--accent-color) !important; font-weight: 800 !important; }
+    .calc-tip { font-size: 0.78rem; border-radius: 10px; padding: 0.5rem 0.65rem; margin-top: 0.7rem; line-height: 1.4; }
+
+    /* ===== Modal de producto ===== */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(20,16,10,0.5); z-index: 300; display: none; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: #fff; border-radius: 16px; max-width: 940px; width: 100%; max-height: 92vh; overflow-y: auto; position: relative; padding: 1.5rem; }
+    .modal-close { position: absolute; top: 0.9rem; right: 1rem; background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--text-muted); line-height: 1; }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; }
+    @media (max-width: 720px) { .modal-grid { grid-template-columns: 1fr; } }
+
+    .modal-galeria { display: flex; gap: 0.6rem; }
+    .modal-miniaturas { display: flex; flex-direction: column; gap: 0.5rem; width: 62px; flex-shrink: 0; max-height: 430px; overflow-y: auto; }
+    .modal-miniaturas img { width: 62px; height: 62px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid var(--card-border); background: #f3efe7; }
+    .modal-miniaturas img.activa { border-color: var(--accent-color); }
+    .modal-imagen-principal { flex: 1; min-width: 0; position: relative; padding: 0 2.4rem; }
+    .modal-imagen-principal img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 12px; background: #f3efe7; display: block; }
+    .modal-galeria-flecha {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+      width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;
+      background: rgba(255,255,255,0.92); color: var(--text-main); font-size: 1.25rem; line-height: 1;
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .modal-galeria-flecha.prev { left: 0; }
+    .modal-galeria-flecha.next { right: 0; }
+    @media (max-width: 720px) {
+      .modal-galeria { flex-direction: column; }
+      .modal-miniaturas { flex-direction: row; width: 100%; max-height: none; overflow-x: auto; }
+      .modal-miniaturas img { flex-shrink: 0; }
+    }
+
+    .oculto { display: none !important; }
+    #modal-code { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    #modal-name { margin: 0.2rem 0 0.6rem; font-size: 1.4rem; }
+    #modal-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; }
+    #modal-detalles { color: var(--text-muted); font-size: 0.86rem; padding-left: 1.1rem; margin: 0.6rem 0 0; }
+    .modal-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin: 1rem 0 0.4rem; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .chip { border: 1px solid var(--card-border); background: #fff; color: var(--text-main); padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.84rem; cursor: pointer; }
+    .chip.active { background: var(--accent-color); border-color: var(--accent-color); color: #fff; }
+    .modal-color-vacio { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
+    #modal-precio { font-size: 1.3rem; font-weight: 800; color: var(--accent-color); margin: 1rem 0 0.6rem; }
+    #modal-qty { width: 74px; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--card-border); font-size: 0.95rem; margin-top: 0.3rem; }
+    #modal-aviso { font-size: 0.8rem; color: #92400e; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 0.5rem 0.7rem; margin: 0.6rem 0; display: none; }
+
+    /* Panel del carrito: ancla abajo a la derecha, encima del botón flotante. */
+    .cart-float-wrap { position: fixed; right: 18px; bottom: 88px; z-index: 145; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-container">
+    <span class="logo-badge">BYM</span>
+    <div class="logo-text">
+      <h1>Accessories BYM</h1>
+      <p>Joyería</p>
+    </div>
+  </div>
+  <nav class="site-nav">
+    <a href="#catalogo">Catálogo</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <span class="hero-badge">BYM</span>
+  <h2>Accessories BYM</h2>
+  <p>Anillos, collares, aretes y pulseras. Piezas por unidad y al por mayor, con envío a todo el país.</p>
+</section>
+
+<div class="page" id="catalogo">
+  <!-- ============ CARRUSEL DE SUBCATEGORÍAS ============
+       Las 4 categorías de joyería. Agrega/edita objetos en SUBCATS (bloque de JS de abajo). -->
+  <div class="subcats-wrap" id="subcats-wrap"></div>
+
+  <div class="layout">
+    <main>
+      <div class="grid-header"><span class="conteo" id="conteo-productos"></span></div>
+      <!-- ============ CUADRÍCULA DE PRODUCTOS ============
+           Se llena desde el array `productos` de abajo. Cada tarjeta abre su modal de detalle. -->
+      <div class="products-grid" id="products-grid"></div>
+    </main>
+
+    <!-- Cotizador al por mayor: mismo motor compartido que Bolsas De Colombia
+         (scripts/cotizador.js). Descuento 5% desde 50 unidades, 10% desde 100. -->
+    <aside class="cotizador">
+      <h3>Cotizador al por mayor</h3>
+      <div id="cotizador-cont">
+        <div class="calc-group">
+          <label for="calc-product">Pieza a cotizar</label>
+          <select id="calc-product" onchange="Cotizador.calcular()"></select>
+        </div>
+        <div class="calc-group">
+          <label for="calc-qty">Cantidad</label>
+          <input type="number" id="calc-qty" value="50" min="1" oninput="Cotizador.calcular()">
+        </div>
+        <div class="calc-output">
+          <div class="calc-row"><span>Precio unitario</span><span id="out-unit">—</span></div>
+          <div class="calc-row"><span>Subtotal</span><span id="out-sub">—</span></div>
+          <div class="calc-row"><span>Ahorro por mayor</span><span id="out-discount">—</span></div>
+          <div class="calc-row calc-total"><span>Total estimado</span><span id="out-total">—</span></div>
+        </div>
+        <div id="discount-tip" class="calc-tip"></div>
+        <button class="btn btn-outline" style="width:100%;margin-top:0.75rem" onclick="Cotizador.enviarWhatsapp()">Enviar cotización por WhatsApp</button>
+      </div>
+      <p class="vacio" id="cotizador-vacio" hidden>En cuanto haya piezas cargadas vas a poder cotizar aquí al instante.</p>
+    </aside>
+  </div>
+</div>
+
+<footer class="site-footer" id="contacto">
+  Accessories BYM — Joyería.<br>
+  <!-- TODO: reemplazar por los datos de contacto reales antes de publicar. -->
+  WhatsApp: pendiente de configurar · correo@pendiente.com
+</footer>
+
+<!-- ============ MODAL DE PRODUCTO ============ -->
+<div id="product-modal" class="modal-overlay" aria-hidden="true">
+  <div class="modal-box">
+    <button class="modal-close" onclick="cerrarProducto()" aria-label="Cerrar">×</button>
+    <div class="modal-grid">
+      <div class="modal-galeria">
+        <div class="modal-miniaturas" id="modal-miniaturas"></div>
+        <div class="modal-imagen-principal">
+          <img id="modal-img" src="" alt="">
+          <button type="button" class="modal-galeria-flecha prev" id="modal-galeria-prev" aria-label="Foto anterior" onclick="moverImagenGaleria(-1)">‹</button>
+          <button type="button" class="modal-galeria-flecha next" id="modal-galeria-next" aria-label="Foto siguiente" onclick="moverImagenGaleria(1)">›</button>
+        </div>
+      </div>
+      <div>
+        <span id="modal-code"></span>
+        <h2 id="modal-name"></h2>
+        <p id="modal-desc"></p>
+        <ul id="modal-detalles"></ul>
+
+        <div class="modal-label" id="modal-talla-label">Talla / medida</div>
+        <div id="modal-tallas" class="chip-row"></div>
+
+        <!-- Sección de color: la estructura está lista, pero los colores se dejan EN BLANCO a
+             propósito (pedido explícito). Para activarla, agrega valores al array `colores` de
+             cada pieza en el bloque de datos de abajo — sin tocar nada más. -->
+        <div class="modal-label">Color / acabado</div>
+        <div id="modal-colores" class="chip-row"></div>
+        <div id="modal-color-vacio" class="modal-color-vacio">Colores por definir.</div>
+
+        <div id="modal-precio"></div>
+        <div id="modal-aviso"></div>
+        <div class="modal-label">Cantidad</div>
+        <input id="modal-qty" type="number" min="1" value="1" oninput="refrescarModal()">
+        <br><br>
+        <button id="modal-action" class="btn" onclick="agregarProductoAlCarrito()">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CARRITO ============ -->
+<div class="cart-float-wrap">
+  <button class="cart-fab" id="cart-fab" onclick="toggleCart()" aria-label="Ver carrito">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
+    <span class="cart-badge" id="cart-count">0</span>
+  </button>
+  <div class="cart-panel" id="cart-panel" aria-hidden="true">
+    <div class="cart-panel-head"><span>Tu carrito</span><button class="cart-panel-close" onclick="toggleCart(false)" aria-label="Cerrar">×</button></div>
+    <div class="cart-items"></div>
+    <div class="cart-panel-footer"></div>
+  </div>
+</div>
+
+<a class="whatsapp-float" id="whatsapp-float" href="#" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path d="M17.6 6.32A7.85 7.85 0 0012.05 4a7.94 7.94 0 00-7.94 7.94c0 1.4.37 2.77 1.07 3.97L4 20l4.2-1.1a7.93 7.93 0 003.85.98 7.94 7.94 0 007.94-7.94 7.9 7.9 0 00-2.39-5.62zM12.05 18.4a6.6 6.6 0 01-3.37-.92l-.24-.14-2.5.66.67-2.44-.16-.25a6.58 6.58 0 01-1.01-3.51 6.6 6.6 0 016.61-6.6 6.56 6.56 0 014.67 1.94 6.55 6.55 0 011.93 4.67 6.6 6.6 0 01-6.6 6.6zm3.61-4.94c-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.45.1-.13.2-.51.64-.63.77-.11.13-.23.15-.43.05-.2-.1-.83-.31-1.58-.98-.58-.52-.98-1.16-1.09-1.36-.11-.2-.01-.3.09-.4.09-.09.2-.23.3-.35.1-.11.13-.2.2-.33.06-.13.03-.25-.02-.35-.05-.1-.45-1.08-.61-1.48-.16-.39-.33-.33-.45-.34-.11-.01-.25-.01-.38-.01-.13 0-.35.05-.53.25-.18.2-.7.68-.7 1.66s.72 1.93.82 2.06c.1.13 1.4 2.15 3.4 3.01.48.21.85.33 1.14.43.48.15.91.13 1.26.08.38-.06 1.17-.48 1.34-.94.16-.46.16-.86.11-.94-.05-.08-.18-.13-.38-.23z"/></svg>
+</a>
+
+<script src="scripts/catalogo-bym.js" defer></script>
+</body>
+</html>

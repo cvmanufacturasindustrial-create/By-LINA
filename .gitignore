@@ -1,0 +1,14 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+server.out.txt
+server.err.txt
+
+# Netlify local
+.netlify
+
+# Datos con PII real de clientes — no versionar
+datos/pedidos-web.csv
+datos/leads-recibidos.csv
+datos/archivos-clientes/

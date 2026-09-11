@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel — Accessories BYM</title>
+  <style>
+    body { font-family: 'Outfit', Arial, sans-serif; margin: 0; padding: 2.5rem 1.5rem; line-height: 1.6;
+           background: linear-gradient(135deg, #1c1a16 0%, #2a2620 100%); color: #f5f1e8; }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    h1 { margin: 0 0 0.3rem; font-family: 'Playfair Display', Georgia, serif; }
+    p.sub { color: #b0a48c; margin: 0 0 2rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    a.card {
+      display: block; text-decoration: none; color: inherit; padding: 1.25rem 1.4rem;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    a.card:hover { border-color: #b08d57; transform: translateY(-2px); }
+    a.card h2 { margin: 0 0 0.3rem; font-size: 1.02rem; }
+    a.card span { color: #b0a48c; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Accessories BYM</h1>
+    <p class="sub">Panel interno</p>
+    <div class="cards">
+      <a class="card" href="/"><h2>Catálogo</h2><span>Ver la tienda como la ve el cliente</span></a>
+      <a class="card" href="/pedidos"><h2>Pedidos Web</h2><span>Nombre, teléfono, dirección y estado de cada pedido · CSV descargable (requiere login)</span></a>
+      <a class="card" href="/inventario"><h2>Control de Inventario</h2><span>Stock con semáforo (datos/01_control_de_inventario.md)</span></a>
+    </div>
+  </div>
+</body>
+</html>

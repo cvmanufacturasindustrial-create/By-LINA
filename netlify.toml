@@ -1,0 +1,12 @@
+# Bolsas De Colombia — proyecto independiente. Netlify es hosting estático (no corre app.js):
+# el pago en línea y los leads B2B necesitan el servidor real (node app.js) para funcionar;
+# en Netlify caen automáticamente al flujo de WhatsApp, por diseño.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+[[headers]]
+  for = "/imagenes/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
