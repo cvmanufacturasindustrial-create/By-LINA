@@ -41,15 +41,13 @@ a { color: inherit; }
   padding: 0.9rem 1.5rem; position: sticky; top: 0; z-index: 120;
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
 }
-.logo-container { display: flex; align-items: center; gap: 0.75rem; }
-.logo-badge {
-  background: var(--accent-gradient); width: 44px; height: 44px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff;
-  font-family: 'Playfair Display', Georgia, serif; letter-spacing: 0.02em;
+.logo-container { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+/* Logo real de Accessories By LM en el encabezado: chico y cuadrado (reemplaza el badge de
+   texto "BYM" que había antes de tener el logo real). */
+.logo-badge-img {
+  width: 48px; height: 48px; border-radius: 12px; object-fit: cover; display: block;
   box-shadow: 0 6px 16px rgba(134, 114, 172, 0.35);
 }
-.logo-text h1 { font-size: 1.05rem; margin: 0; font-weight: 600; letter-spacing: 0.04em; }
-.logo-text p { margin: 0; font-size: 0.74rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
 .site-nav { display: flex; gap: 0.4rem; align-items: center; }
 .site-nav a {
   color: var(--text-main); text-decoration: none; padding: 0.5rem 0.85rem; border-radius: 999px;
@@ -65,16 +63,14 @@ a { color: inherit; }
   background: linear-gradient(180deg, var(--pastel-lavanda) 0%, var(--pastel-rosa) 60%, rgba(255,255,255,0) 100%);
   border-bottom: 1px solid var(--card-border);
 }
-.hero .hero-badge {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 1rem;
-  background: var(--accent-gradient); color: #fff;
-  font-family: 'Playfair Display', Georgia, serif; font-size: 1.9rem; letter-spacing: 0.02em;
-  box-shadow: 0 10px 26px rgba(134, 114, 172, 0.32);
+/* Logo real GRANDE en el hero (mismo criterio que el logo de Bolsas De Colombia: ocupa buena
+   parte del ancho del hero, con sombra suave para que se despegue del fondo pastel). */
+.hero .hero-logo {
+  width: 100%; max-width: 320px; height: auto; margin: 0 auto 1rem; display: block;
+  border-radius: 20px; box-shadow: 0 16px 40px rgba(134, 114, 172, 0.35);
 }
-.hero h2 { margin: 0 0 0.35rem; font-size: 1.9rem; font-weight: 600; letter-spacing: 0.03em; color: var(--accent-color-dark); }
 .hero p { margin: 0 auto; max-width: 460px; color: var(--text-muted); font-size: 0.98rem; }
-@media (max-width: 640px) { .hero { padding: 2.25rem 1.25rem 2rem; } .hero h2 { font-size: 1.5rem; } }
+@media (max-width: 640px) { .hero { padding: 2.25rem 1.25rem 2rem; } .hero .hero-logo { max-width: 220px; } }
 
 /* ===== Botón genérico ===== */
 .btn {
